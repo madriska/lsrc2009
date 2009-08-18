@@ -1,0 +1,12 @@
+[submodule "sinatra_lab/sinatra"]
+	path = sinatra_lab/sinatra
+	url = git://github.com/sinatra/sinatra.git
+[submodule "sinatra_lab/shotgun"]
+	path = sinatra_lab/shotgun
+	url = git://github.com/rtomayko/shotgun.git
+[submodule "sinatra_lab/rack"]
+	path = sinatra_lab/rack
+	url = git://github.com/rack/rack.git
+[submodule "sinatra_lab/rack-contrib"]
+	path = sinatra_lab/rack-contrib
+	url = git://github.com/rack/rack-contrib.git
