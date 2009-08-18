@@ -1,0 +1,184 @@
+- Ruby Craftsmanship (Intermediate Level)
+	: This training session is for folks who want to sharpen their Ruby skills
+	: and learn how to write code the way a seasoned Rubyist might. It aims to
+	: expose key techniques and practices common among skilled Ruby
+	: developers, while providing the necessary background to learn the
+	: reasoning behind them as well.  Students should expect a high degree of
+	: interaction in this course, as well as plenty of room for Q&A and
+	: discussion. There will be a fair bit of lab work, including pair and
+	: group exercises, so be sure to bring a laptop along! These workshops
+	: will be based on the material taught in class, and will help put into
+	: practice the ideas we cover.  
+	:
+	: Students are expected to have a basic technical understanding of Ruby,
+	: and perhaps have completed a small to mid-size project using it.
+	: Experienced programmers who have not yet done substantial work with Ruby
+	: but are familiar with the basics would also be good candidates for this
+	: section. Of course, any Rubyist who is just looking for a new
+	: perspective is also welcome to join.
+	:
+	: Topics for this session include:
+	
+	- Improving Code Literacy (GTB)
+		: Most programmers are better at writing code than reading it. But in
+		: an open source community, code reading skills matter. We'll show you
+		: how to learn from other people's code, and have fun doing it. By
+		: covering some common conventions, sharing some tips and tricks, and
+		: walking you through the discovery process, you'll learn how to read
+		: code like a pro. You can then use this new-found skill for all sorts
+		: of good uses, from learning new tricks to hunting down a stubborn
+		: bug in one of your dependencies.
+		- Motivation behind code reading
+		- Finding your way around a Ruby project
+		- Learning from tests / examples
+		- Walkthrough of some real code
+		
+		- LAB: Group excercise in reading open source code. 
+	
+	- Basics of Software Design (BE)
+		: We can feel the difference between good and bad programmatic
+		: interfaces constantly in our every day work. Here we’ll cover how to
+		: make use of Ruby’s flexible argument processing, code blocks, and
+		: syntactic sugar to write APIs that pleasantly wrap your domain
+		: model. We’ll talk a bit about the importance of the naming of
+		: things, as well as basic organizational structure of classes in
+		: modules, but for the most part, we’ll be discussing nuts and bolt
+		: API challenges at the method level. The key takeaway is that
+		: decently designed systems make life easier, whether you’re a
+		: framework author or just a guy hacking together a few quick business
+		: reports. We’ll show you how to do this without getting too bogged
+		: down in theory or abstract patterns. (Those who are interested in
+		: that stuff, may wish to take our advanced course as well)
+		- What does it mean for software to be well designed?
+		- Overview of common API techniques
+		- The many wonders of code blocks
+		- Classes and Modules in harmony (Basic Ruby OOD principles)
+		
+		- LAB: Implementing code to fit a pre-defined API
+	
+	- Practical Test Driven Development (GTB)
+		: We all know that writing tests is a good idea, but sometimes dogma
+		: can get in the way of being productive. Although testing can be hard
+		: at times, it doesn’t always need to be. We’ll walk through how to
+		: boil business requirements down to unit tests, by walking through a
+		: realistic scenario. Along the way, we’ll see the benefits of the
+		: tight feedback loop as well as the ability of tests to help
+		: influence design decisions. We’ll also talk a bit about how to cover
+		: some of the dark corner cases, including testing complex output as
+		: well as how mocks and stubs can come in handy when dealing with
+		: external resources.
+		- TDD as part of the requirements discovery process
+		- The Red-Green-Refactor cycle
+		- Improving clarity of test cases
+		- Testing complex output
+		- Dealing with external dependencies (Mocking / Stubbing)
+		
+		- LAB: Ping-Pong Pair Programming
+	
+	- Being a Good Ruby Citizen (BE)
+		- Playing nicely with others: making your code more amenable to
+		  integration
+		- Discoverable API design: designing comfortable Rubyish interfaces
+		  (PoLS) and "acting like Ruby"
+		- Sharing your toys: being a good member of the open source community
+		- (Greg) "don't give me 8 different iterators that repeat what
+		  Enumerable does"
+		- Keeping your own stupid hacks in your own stupid code.
+		- method_missing vs. respond_to? and the latter's utility or lack
+		  thereof 
+			: GTB: <- interesting.  I almost never 'do the right thing here'
+			: because it's a PITA. / BE: We talked about this during RBP
+			: review... I'm still not convinced either way, but there's a
+			: discussion to be had here.
+		- stomping on toes / polluting namespaces bad. Thanks SExpression and
+		  your Kernel#s. (Opt-in namespace pollution OK) <- YES
+		- Law of demeter in API design. Don't make everyone touch your private
+		  members.
+		- Equality semantics. Object#hash. <- YES (Also, Comparable).  Don't
+		  implement <, >, ... when <=> will do.
+		- As time available, we could discuss friendly project organization.
+		  But Greg has probably already covered that by now.
+		
+		- LAB: Group refactoring of "unfriendly" code (code that causes
+		  problems for others).
+	
+	- Wrap up: We'll try to leave some time for general Q&A and reflection.
+	  But students are welcome to catch us on the hallway track otherwise.
+
+- Ruby Craftsmanship (Advanced Level)
+	: This training session is for folks who want to sharpen their Ruby skills
+	: and learn how to write code the way a seasoned Rubyist might. It aims to
+	: expose key techniques and practices common among skilled Ruby
+	: developers, while providing the necessary background to learn the
+	: reasoning behind them as well.  Students should expect a high degree of
+	: interaction in this course, as well as plenty of room for Q&A and
+	: discussion. There will be a fair bit of lab work, including pair and
+	: group exercises, so be sure to bring a laptop along! These workshops
+	: will be based on the material taught in class, and will help put into
+	: practice the ideas we cover.  
+	:
+	: Students are expected to a have a decent amount of practical experience
+	: with Ruby. The course will focus mainly on advanced design principles in
+	: the context of real projects. This makes it ideal for folks who are
+	: looking to lead a team of developers or maintain an open source project.
+	:
+	: Topics for this session include:
+	
+	- Understanding Ruby's Object Model (GTB)
+		: Ruby is object oriented, but often people get as far as the basic
+		: single class inheritance model and stop. The more adventurous might
+		: learn how to effectively make use of mixins, but the rest is still
+		: shrouded in mystery. What does it really mean for Ruby to be a
+		: message-passing object system? What is per-object behavior and how
+		: can it be useful? How can Ruby’s built in event hooks (such as
+		: method_missing, inherited, included, …) be used for fun and profit
+		: rather than evil? These are the questions we want to answer.
+		- Message Passing OO-Style
+		- Per-object behavior (singleton methods)
+		- Core Structures (BasicObject, Object, Class, Kernel, and Module)
+		- Dyanamic event hooks (method_missing, included, inherited, const_get, etc)
+		- Anonymous classes and modules
+	
+	- Design Principles for Ruby Systems (BE)
+		- Managing complexity in large applications: using abstraction
+		  barriers to reduce mental load
+		- Object-oriented systems design principles (ref C2)
+			- SOLID
+			- TODO: other OO design principles (see C2)
+		- Coupling, Cohesion, and Connascence
+		- Beg, Borrow, or Steal: Leveraging Third-Party Software
+		
+		- LAB: Architecture Jeopardy. Identifying points for improvement in sample code.
+	
+	- Domain Specific Interfaces and Applications (GTB)
+		: Ruby is famous for getting out of your way and letting you bend it
+		: to look natural in almost any setting. We’ll show you how to do this
+		: without making things too brittle under the hood. We’ll walk through
+		: several examples from existing open source Ruby projects and discuss
+		: the merits and drawbacks of various approaches as a group.
+		- Examples of Ruby based domain specific systems
+		- Layering domain language on top of a developer API
+		- Dynamic interface generation
+		- Evaluating code within a context
+		- Avoiding the COBOL effect. (Emphasizing Domain Language over Natural Language)
+		
+		- LAB: Debugging bad meta-programming (a lesson in pain and how to prevent it)
+			: The only way to drive the point home about how excessively
+			: dynamic code could be dangerous is to see the drawbacks first
+			: hand. We’ll create a few nasty code samples and have groups try
+			: to fix them.
+	
+	- Refactoring (BE)
+		- Basic refactoring methods and principles
+		- Knowing where to start (using metrics to find code smells)
+			: flog, rcov, grep "(TODO|FIXME|XXX)" | wc -l # ;-)
+		- Acknowledging technical debt; introducing tests to untested code
+		- Knowing where to stop ( avoiding over-factored designs )
+		
+		- LAB: Good / Bad / Ugly code, refactoring exercises.
+			: Show slides with code, audience can debate good/bad/ugly ("ugly"
+			: meaning there is necessary complexity and there isn't an elegant
+			: solution). "I will try to hit code examples that fit in each of
+			: the previous topics we’ve studied, and keep this open ended. The
+			: answers will probably surprise us."
+
