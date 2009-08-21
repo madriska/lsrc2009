@@ -2,25 +2,33 @@
 
 * Testing framework and tests
   - What testing framework does Sinatra use?
+    * Basically Test::Unit. (Rakefile: rake/testtask, task :default => :test...)
     - Where does the +it+ method come from?
+      * Look in any of the test files. They require "helper". So look in
+        helper.rb. "alias_method :it, :test"
     - OK, then where does +test+ come from? That's not vanilla Test::Unit.
       * show use of +ack+ for code pickaxeing
         $ ack "def self.test"
     > test/contest.rb
       - What is the +self.context+ method doing, in Test::Unit terms?
+        * Sets up a new Test::Unit::TestCase subclass, prepends all of the
+          existing setup methods, and evaluates the given block within.
+        * Almost all of the benefit of Contest is that it allows nested contexts
+          by prepending the setup_blocks upon subclassing.
         * Note: "magic" Class#name; the const_set() has action-at-a-distance
             i = Class.new
             MyClass = i
             i.name # => "MyClass"
   > test/base_test.rb
     - Why are the examples interleaved with the class definition?
+      * No reason, just readability. This is more of a discussion question.
       - Does it matter that the class definition is broken up?
       - Is the test code run during or after the execution of base_test.rb?
         - What actually happens immediately when an +it+ block is run?
+        * All of the class definitions run at load time; there's no reason they
+          have to be interleaved like that.
   - How does "assert ok?" or "assert redirect?" work?
     > test/helper.rb: method_missing delegates to +response+.
-  - When two +before+ filters are defined, in what order do they run?
-    > test/filter_test.rb
   > test/routing_test.rb
     - Routes can take conditions. How does this work?
         user_agent(/Foo/)
@@ -31,13 +39,15 @@
         get '/foo' do
           'not foo'
         end
-        TODO
+      * +condition+ just pushes on to @conditions. 
+      * @conditions is saved and cleared during each call to +route+.
+        > base.rb:799
+          conditions, @conditions = @conditions, []
+        * diversion: parallel assignment, destructuring?
   > test/route_added_hook_test.rb
     - What role does RouteAddedTest play?
-  - What sort of support does Sinatra have for conditional GET?
-    * Last-Modified, ETag
-    - If you understand how these features work, how do you use them in Sinatra?
-      > test/helpers_test.rb: +last_modified+ and +etag+
+      * Just a mock of sorts for testing extensions.
+  - Anything that jumps out at you? Poll group for discussion.
 * General
   * Note the combined getters / setters: (base.rb:60)
       def status(value=nil)
@@ -46,6 +56,9 @@
       end
   - Routes, along with other options, are passed down from superclass to
     subclass. How does this work? 
+    * Completely manually. (This is more of a code excavation exercise --
+      just to show how to *find* this. There's nothing magical about how this
+      functionality actually works.)
   - What is the purpose of this bit of convoluted code? (base.rb:67)
       def body(value=nil, &block)
         if block_given?
@@ -55,30 +68,52 @@
           response.body = value
         end
       end
-  - How do the ivars get passed through to the renderer?
-      get "/" do
-        @text = "Hello, world!"
-        haml %{%p= @text}
-      end
-  * Freakin' sweet: Sinatra::Base#forward (using modular Sinatra app as Rack
-    middleware). 
-    http://www.slideshare.net/benschwarz/sinatra-rack-and-middleware-1509268
+      * Just to comply with the Rack interface that says a body must respond to
+        #each. You can pass a block to +body+ and defer evaluation until the
+        response is actually read.
   - What is required to write and register an extension with Sinatra? Can you
     describe the extension API just by reading the code?
     > base.rb:855 et al. -- just a module, nothing specific. Optional imeths
       implement hook callbacks. Sinatra calls #registered(self) when the module
       is registered.
+  - How do the ivars get passed through to the renderer?
+      get "/" do
+        @text = "Hello, world!"
+        haml %{%p= @text}
+      end
+    * Everything gloms onto the same object. The view is the renderer. Only
+      small shims required to pull the current binding into ERb, etc.
+    * Showing the benefits of keeping everything inside the same object. Rails
+      has a bunch of plumbing to shuttle bindings around, so that you get the
+      variables you want, where you want. Sinatra is small enough that it just
+      evaluates everything inside the same object.
+  * Poll for suggestions, interesting code, etc. --v
+  * Freakin' sweet: Sinatra::Base#forward (using modular Sinatra app as Rack
+    middleware). 
+    http://www.slideshare.net/benschwarz/sinatra-rack-and-middleware-1509268
 * Plumbing
-  - Why does +Sinatra::Base#call+ dup itself and then call #call! ? (base.rb:360)
   - A Sinatra app can be really simple. What makes this start a server?
       # my_app.rb
       require 'sinatra'
       get('/') { "Hello, World!" }
+    * Look in sinatra.rb. Requiring 'sinatra' pulls in 'sinatra/main', which
+      does some option processing and sets an at_exit callback if $0 (program
+      being run) == caller_files.first (requirer of 'sinatra').
+      This is "__FILE__ == $0" one level removed.
     - When this syntax is used, what actually happens at the modular Sinatra
       level? In other words, where / how is the actual Sinatra app created?
+      * Sinatra::Delegator is mixed into main. This exposes the DSL and the
+        helpers at the toplevel, and they delegate to Sinatra::Application.
       - Since "require 'sinatra'" in a Ruby file starts a server using the
         "classic" Sinatra interface, why doesn't it start a server when required
         directly from irb?
-  - How does Sinatra know what server to run?
-
+        * The at_exit run! only works if the file requiring 'sinatra' is the
+          file currently being run ($0). Under irb, $0 is "irb".
+  - How does Sinatra know what server to run? (Mongrel, Thin, ...)
+    * Cheating: It just uses Rack::Handler. You can specify with -s (main.rb)
+  - Why does +Sinatra::Base#call+ dup itself and then call #call! ? (base.rb:360)
+    * So that the app can be called from Rack multiple times. The app is 
+      allowed to munge its environment, and since it's working on a clean copy
+      it can scribble on params, env, request, response, etc. all it wants and
+      Rack can still dispatch anew.
 
