@@ -101,6 +101,50 @@ class MethodArgumentsTest < Test::Unit::TestCase
 
   end
 
+  describe "a function with some optional arguments" do
+    def distance(x1, y1, x2=0, y2=0)
+      Math.hypot(x2-x1, y2-y1)
+    end
+
+    test "calling with only the required arguments" do
+      return
+      assert_equal __, distance(3,4)
+    end
+
+    test "overriding some of the default arguments" do
+      return
+      assert_equal __, distance(3,4,3)
+    end
+
+    test "overriding all the default arguments" do
+      return
+      assert_equal __, distance(1,1,5,1)
+    end
+
+    test "calling with less than the required arguments" do
+      return
+      error = assert_raises(___) do
+        distance(1)
+      end
+
+      # Pay close attention to the error message. How does it differ from when
+      # all arguments are mandatory?
+      assert_match /#{__}/, error.message
+    end
+
+    test "calling with too many arguments" do
+      return
+
+      error = assert_raises(___) do
+        distance(1,2,3,4,5)
+      end
+
+      # Pay close attention to the error message.  Is it any different than when
+      # all arguments are mandatory?
+      assert_match /#{__}/, error.message
+    end
+  end
+
   describe "When all arguments are optional" do
 
     def story(a="Matz",b="is",c="nice")
@@ -116,6 +160,62 @@ class MethodArgumentsTest < Test::Unit::TestCase
       return
       assert_equal __, story("We","are")
     end
+
+  end
+
+  describe "keyword argument style" do
+    def story(details)
+      "#{details[:noun]} #{details[:verb]}"
+    end
+
+    test "if the last argument is a hash, you can omit the {}" do
+      return
+      msg = story(:noun => "Matz", :verb => "is", :adjective => "Nice")
+      assert_equal __, msg
+    end
+
+    def story2(details={})
+      "#{details[:place] || 'LSRC'} #{details[:verb] || 'Rules!'}"
+    end
+
+    test "can be used in combination with optional arguments" do
+      return
+      # call story2() with the appropriate arguments to produce these values
+      assert_equal "LSRC Rules!",   __
+      assert_equal "LSRC Rocks!",   __
+      assert_equal "Austin Rules!", __
+    end
+
+    # measures distance from origin by default, but a second point can be
+    # provided.  See test below
+    def distance(point1, options={})
+      # fill in.  see other distance functions for hints.
+    end
+
+    test "can follow some mandatory arguments" do
+      assert_equal 5, distance([5,0])
+      assert_equal 4, distance([0,4])
+      assert_equal 5, distance([0,4], :to => [3,0]) 
+    end
+
+  end
+
+  describe "Treating arguments as an array" do
+
+    def slurpy(*args)
+      args
+    end
+
+    test "Arguments can be treated as an array" do
+      # call slurpy() with the right arguments to get the following results
+      assert_equal [], __
+      assert_equal [1,2,3], __
+      assert_equal [[1,2,3]], __
+      assert_equal [:foo, :bar, { :baz => :foobar }], __
+      assert_equal [{:baz => :foobar}, :foo, :bar], __
+    end
+
+    # What can this approach be useful for?
 
   end
 
