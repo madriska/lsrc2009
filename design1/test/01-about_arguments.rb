@@ -1,130 +1,124 @@
 require "#{File.dirname(__FILE__)}/helper.rb"
 
-# We all know how to use blocks, as they're everywhere in Ruby.
-# But how do the nuts and bolts work at the method definition level?
-#
-# These tests will touch on some of the basic concepts, be sure to rely on the
-# collective knowledge of your team to fill in the rest, and if anything isn't
-# clear, just ask!
+class MethodArgumentsTest < Test::Unit::TestCase
 
-class BlockBasicsTest < Test::Unit::TestCase
+  describe "Functions without arguments" do
 
-  def foo
-    "does nothing interesting"
-  end
-
-  test "All methods can accept a block, even if they never yield" do
-    assert_nothing_raised do
-      # error never gets raised because block never gets called
-      foo { raise }
-
-      # this is a source of many debugging nightmares, can you think of why?
-    end
-  end
-
-  describe "the yield keyword" do
-
-    def trivial
-      "Got from the block: #{yield}"
+    def hello
+      "Hello World"
     end
 
-    test "executes the block attached to a method" do
-      assert_equal __, trivial { 1 + 1 }
-      assert_equal __, trivial { "elloH".reverse }
+    test "Calling function with parens" do
+      assert_equal __, hello()
     end
 
-    test "raises an error when block is not provided" do
+    test "Calling without parens" do
       return
-      assert_raises(___) do
-        trivial
+      assert_equal __, hello
+    end
+
+    test "Parens on method calls matter sometimes" do
+      return
+      hello = "Hello Local Variable"
+      assert_equal __, hello
+      assert_equal __, hello()
+    end
+
+  end
+
+  describe "functions with one required argument" do
+    
+     def hello(name)
+       "Hello #{name}"
+     end
+
+     test "Calling function with parens" do
+       return
+       msg = hello("Greg")
+       assert_equal __, msg
+     end
+
+     test "Calling without parens" do
+       return
+       msg = hello "Greg"
+       assert_equal __, msg
+     end
+
+     test "Methods with arguments won't be confused with local variables" do
+       return
+       hello = "Hi there Mr. Local Variable"
+       msg = hello "Greg"
+       assert_equal __, msg
+     end
+
+     test "But omitting parens can still be dangerous" do
+       return
+       # NOTE: not a syntactically valid ruby line, uncomment to verify
+       # assert_equal __, hello "Greg"
+
+       # NOTE: it might seem like this should fix it, but it doesn't.
+       # assert_equal(__, hello "Greg")
+
+       # This will do the trick, though
+       assert_equal __, hello("Greg")
+     end
+
+  end
+
+  describe "a function with many required arguments" do
+    def distance(x1, y1, x2, y2)
+      Math.hypot(x2-x1, y2-y1)
+    end
+
+    test "calling with all required arguments" do
+      return
+      assert_equal __, distance(0,0,3,0)
+      assert_equal __, distance(3,0,0,4)
+      assert_equal __, distance(4,1,1,5)
+    end
+
+    test "calling with less than the required arguments" do
+      return
+
+      # What is the class of the exception raised
+      error = assert_raises(___) do
+        distance(0,0,0)
       end
+
+      # What pattern would validate the error message?
+      assert_match /#{__}/, error.message
     end
 
-    def trivial_block_optional
-      if block_given?
-        "Got from the block: #{yield}"
-      else
-        "Nothing"
+    test "calling with more than required arguments" do
+      return
+
+      error = assert_raises(___) do
+        distance(0,0,1,1,5)
       end
-    end
 
-    test "Can conditionally execute a block using block_given?" do
-      assert_equal __, trivial_block_optional
-      assert_equal __, trivial_block_optional { 4 + 7 }
-    end
-
-    def trivial4
-      yield
-      yield
-      yield
-      yield
-    end
-
-    test "executes the block every time yield is called" do
-      return
-      i = 0
-      trivial4 { i += 1 }
-      assert_equal __, i
-    end
-
-    def with2
-      yield(2)
-    end
-
-    test "can pass arguments to the block" do
-      return
-
-      assert_equal __, with2 { |x| x + 3 }
-      assert_equal __, with2 { |x| "Terminator #{x}" }
-    end
-
-    test "block variables do not pollute enclosing scope" do
-      return
-
-      with2 { |x| x + 3 }
-      assert_raises(___) { x } 
+      assert_match /#{__}/, error.message
     end
 
   end
 
-  describe "blocks as Proc objects" do
+  describe "When all arguments are optional" do
 
-    def block_as_proc(&block)
-      "I got you #{block.call('otomustaM .rM')}"
+    def story(a="Matz",b="is",c="nice")
+      "#{a} #{b} #{c}"
     end
 
-    def delegator(&block)
-      block_as_proc(&block) + " and I'll never let you go!"
-    end
-
-    test "uses the same block syntax as when using yield" do
+    test "function may be called with no arguments" do
       return
-      # fill in using block_as_proc() with an appropriate block argument
-      assert_equal "I got you Mr. Matsumoto", __  
+      assert_equal __, story
     end
 
-    test "but can be used for delegation" do
+    test "arguments are processed from left-to-right" do
       return
-      assert_equal __, delegator { |x| x.reverse }
-    end
-
-    def how_many_block_args?(&block)
-      block.arity
-    end
-
-    test "Determining number of block arguments with Proc#arity" do
-      return
-      assert_equal __, how_many_block_args? { |a,b| "never gets called" }
-      assert_equal __, how_many_block_args? { |a,b,c| "never gets called" }
-      assert_equal __, how_many_block_args? { |a,*b| "never gets called" }
-      assert_equal __, how_many_block_args? { |a,b,*c| "never gets called" }
-      assert_equal __, how_many_block_args?  {|*a| "never gets called" }
-      assert_equal __, how_many_block_args? {|| "never gets called" }
-
-      # Why is this not zero?
-      assert_equal __, how_many_block_args? { "never gets called" }
+      assert_equal __, story("We","are")
     end
 
   end
 
 end
+
+
