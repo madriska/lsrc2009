@@ -29,3 +29,6 @@ Blocks:
       end
 
       What is a better way to test?
+
+
+  - arity of lambda { }  (-1 on Ruby 1.8.  0 on Ruby 1.9)
