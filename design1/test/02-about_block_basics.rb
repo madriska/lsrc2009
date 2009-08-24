@@ -75,6 +75,15 @@ class BlockBasicsTest < Test::Unit::TestCase
 
   describe "blocks as Proc objects" do
 
+    def identity(&block)
+      block
+    end
+
+    test "If a block is not provided, you'll get a nil value" do
+      return
+      assert_equal __, identity
+    end
+
     def block_as_proc(&block)
       "I got you #{block.call('otomustaM .rM')}"
     end
