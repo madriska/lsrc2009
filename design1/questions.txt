@@ -1,0 +1,31 @@
+Don't make me think!   APIs should be easy to remember without reference
+material.
+
+Arguments:
+
+  ordinal arguments
+    - how many ordinal arguments before it gets overwhelming
+
+  keyword args
+    - what are the advantages of pseudokeyword arguments?
+    - disadvantages "" ?
+      - when is this technique (not?) better for optional arguments?
+
+  arguments as array
+    - when is this useful?
+    - what are the downsides?
+    - how would you document this?  (#call-seq)
+
+Blocks:
+
+  - what are some problems that can happen as a result of all Ruby methods
+    accepting blocks whether or not they've been called?
+    - Way to protect against it:  raise if block_given?   Evil?  Overkill?  Why?
+
+    - this can result in false positives:
+
+      my_method do |x|
+        assert_equal "foo", x
+      end
+
+      What is a better way to test?
