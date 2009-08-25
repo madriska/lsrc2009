@@ -1,3 +1,16 @@
+- New schedule
+	: Schedule: ("Questions, Koans, and Projects")
+	: 
+	:  9:00 -- 10:30  Code reading + graded tests for design
+	: 11:00 -- 12:30  Main Lab: Payroll Reporter
+	: 
+	:  1:30 -- 2:30  Ruby's Object Model, general Q&A ("Advanced Ruby Questions")
+	:                No graded TDD / koans
+	:  2:30 -- 3:00  Project Intro
+	:  3:00 -- 3:30  Break
+	:  3:30 -- 5:00  Big SW Development project
+
+
 - Ruby Craftsmanship (Intermediate Level)
 	: This training session is for folks who want to sharpen their Ruby skills
 	: and learn how to write code the way a seasoned Rubyist might. It aims to
