@@ -22,8 +22,7 @@ class CallBackTest < Test::Unit::TestCase
     end
   end
 
-  test "it's easy to use this technique with your own objects" do
-    return
+  _test "it's easy to use this technique with your own objects" do
     c = Command.new { Time.now }
 
     time1 = c.execute
@@ -51,8 +50,7 @@ class CallBackTest < Test::Unit::TestCase
 
   end
 
-  test "You can even store a collection of callbacks" do
-    return
+  _test "You can even store a collection of callbacks" do
     filter = FilterChain.new
 
     # come up with a chain of condition() calls to make this test pass.

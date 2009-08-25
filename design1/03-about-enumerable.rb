@@ -39,8 +39,7 @@ class EnumerableTest < Test::Unit::TestCase
     assert_equal __, data
   end
 
-  test "All familiar Enumerable methods hinge on each()" do
-    return
+  _test "All familiar Enumerable methods hinge on each()" do
     list = SortedList.new
     list << 5 << 2 << 13 << 7
 
@@ -55,8 +54,7 @@ class EnumerableTest < Test::Unit::TestCase
     include Enumerable
   end
 
-  test "Without an each, no Enumerable methods will run" do
-    return
+  _test "Without an each, no Enumerable methods will run" do
     obj = BrokenEnumerable.new
     error = assert_raises(___) do
       obj.map { |e| "Hai #{e}" }
@@ -72,8 +70,7 @@ class EnumerableTest < Test::Unit::TestCase
     end
   end
 
-  test "Enumerable is useless if you never yield to a block in each" do
-    return
+  _test "Enumerable is useless if you never yield to a block in each" do
     obj = WorthlessEnumerable.new
 
     assert_equal __, obj.map { |x| x + 1 }

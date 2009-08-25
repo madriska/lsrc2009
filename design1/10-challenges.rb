@@ -69,8 +69,61 @@ class ChallengingTest < Test::Unit::TestCase
       assert_equal [5,6,8,10,11], (1..5).map(&transformer)
     end
 
+    describe "A hybrid block based DSL" do
+
+      class ChatBot
+        def initialize
+          @handlers = []
+        end
+
+        def handle(regexp, &block)
+          @handlers << [regexp, block]
+        end
+
+        def self.build(&block)
+          # finish implementing this based on tests below
+          
+          new
+        end
+
+        def reply_to(message)
+          @handlers.each do |pattern, block|
+            if match_data = message.match(pattern)
+              return block.call(match_data)
+            end
+          end
+
+          "I am very angry, because I didn't understand"
+        end
+      end
+
+      # NOTE: The trick here is to use Proc#arity, explained in
+      # 02-about_block_basics.rb , combined with the ideas in
+      # 07-about-blocks-as-interface-sugar.rb
+
+      _test "When called without a block argument, use instance_eval" do
+        # same test as before
+        bot = ChatBot.build do
+          handle(/hello/i) { "Hi there!" }
+          handle(/my name is (\w+)/i) { |m| "Nice to meet you #{m[1]}" }
+        end
+
+        assert_equal "Hi there!", bot.reply_to("Hello")
+        assert_equal "Nice to meet you Matz", bot.reply_to("My name is Matz")
+      end
+
+      _test "When called with a block argument, pass the instantiated bot" do
+         @name = "Keyser Soze"
+
+         bot = ChatBot.build do |b|
+           b.handle(/who am i/i) { "You are #{@name}" }
+         end
+
+         assert_equal "You are Keyser Soze", bot.reply_to("Who am I?")
+      end
+
+    end
+
   end
-
-
 
 end
