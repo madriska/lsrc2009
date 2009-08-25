@@ -32,3 +32,7 @@ Blocks:
 
 
   - arity of lambda { }  (-1 on Ruby 1.8.  0 on Ruby 1.9)
+
+Enumerable:
+
+  - Pretty much every collection should be Enumerable

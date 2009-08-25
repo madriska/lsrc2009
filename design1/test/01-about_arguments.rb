@@ -215,8 +215,6 @@ class MethodArgumentsTest < Test::Unit::TestCase
       assert_equal [{:baz => :foobar}, :foo, :bar], __
     end
 
-    # What can this approach be useful for?
-
   end
 
 end
