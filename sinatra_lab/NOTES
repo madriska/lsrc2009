@@ -19,6 +19,10 @@
             i = Class.new
             MyClass = i
             i.name # => "MyClass"
+      - Do you see any potential issues with using the class hierarchy to
+        define contexts in this way? 
+        * Tests get inherited if you mix tests and contexts at the same level.
+          So you'll get double failures, etc.
   > test/base_test.rb
     - Why are the examples interleaved with the class definition?
       * No reason, just readability. This is more of a discussion question.
@@ -29,6 +33,9 @@
           have to be interleaved like that.
   - How does "assert ok?" or "assert redirect?" work?
     > test/helper.rb: method_missing delegates to +response+.
+    * On any well-tested project, it's a good idea to start your exploration in
+      the tests. And generally, when you look at tests, you'll want to start in
+      the helpers. They define the language the tests are written in.
   > test/routing_test.rb
     - Routes can take conditions. How does this work?
         user_agent(/Foo/)
@@ -94,6 +101,7 @@
 * Plumbing
   - A Sinatra app can be really simple. What makes this start a server?
       # my_app.rb
+      require 'rubygems'
       require 'sinatra'
       get('/') { "Hello, World!" }
     * Look in sinatra.rb. Requiring 'sinatra' pulls in 'sinatra/main', which
