@@ -44,13 +44,14 @@ class ChallengingTest < Test::Unit::TestCase
 
   describe "Code blocks challenge" do
 
-    class FilterChain
+    class Transformer
       # complete this implementation
-
-      def condition
+      
+      def mutation(&block)
         self
       end
 
+      # HINT: This should perform function composition
       def to_proc
         lambda { |x| }
       end
@@ -60,15 +61,13 @@ class ChallengingTest < Test::Unit::TestCase
     # 05-about-blocks-as-callbacks.rb if you're stuck
     #
     test "Fancy block magic combined with some to_proc love" do
-      return
-      filter = FilterChain.new
-      filter.condition { |x| x % 2 == 0 }.
-             condition { |x| x < 10 }.
-             condition { |x| x**2 < 50 }
+      transformer = Transformer.new
+      transformer.mutation { |x| x + 2 }.
+                  mutation { |x| x * 5 }.
+                  mutation { |x| x / 3 }
 
-      assert_equal [2,4,6], (1..20).select(&filter)
+      assert_equal [5,6,8,10,11], (1..5).map(&transformer)
     end
-
 
   end
 
