@@ -12,13 +12,11 @@ class MethodArgumentsTest < Test::Unit::TestCase
       assert_equal __, hello()
     end
 
-    test "Calling without parens" do
-      return
+    _test "Calling without parens" do
       assert_equal __, hello
     end
 
-    test "Parens on method calls matter sometimes" do
-      return
+    _test "Parens on method calls matter sometimes" do
       hello = "Hello Local Variable"
       assert_equal __, hello
       assert_equal __, hello()
@@ -32,27 +30,23 @@ class MethodArgumentsTest < Test::Unit::TestCase
        "Hello #{name}"
      end
 
-     test "Calling function with parens" do
-       return
+     _test "Calling function with parens" do
        msg = hello("Greg")
        assert_equal __, msg
      end
 
-     test "Calling without parens" do
-       return
+     _test "Calling without parens" do
        msg = hello "Greg"
        assert_equal __, msg
      end
 
-     test "Methods with arguments won't be confused with local variables" do
-       return
+     _test "Methods with arguments won't be confused with local variables" do
        hello = "Hi there Mr. Local Variable"
        msg = hello "Greg"
        assert_equal __, msg
      end
 
-     test "But omitting parens can still be dangerous" do
-       return
+     _test "But omitting parens can still be dangerous" do
        # NOTE: not a syntactically valid ruby line, uncomment to verify
        # assert_equal __, hello "Greg"
 
@@ -70,16 +64,13 @@ class MethodArgumentsTest < Test::Unit::TestCase
       Math.hypot(x2-x1, y2-y1)
     end
 
-    test "calling with all required arguments" do
-      return
+    _test "calling with all required arguments" do
       assert_equal __, distance(0,0,3,0)
       assert_equal __, distance(3,0,0,4)
       assert_equal __, distance(4,1,1,5)
     end
 
-    test "calling with less than the required arguments" do
-      return
-
+    _test "calling with less than the required arguments" do
       # What is the class of the exception raised
       error = assert_raises(___) do
         distance(0,0,0)
@@ -89,9 +80,7 @@ class MethodArgumentsTest < Test::Unit::TestCase
       assert_match /#{__}/, error.message
     end
 
-    test "calling with more than required arguments" do
-      return
-
+    _test "calling with more than required arguments" do
       error = assert_raises(___) do
         distance(0,0,1,1,5)
       end
@@ -106,23 +95,19 @@ class MethodArgumentsTest < Test::Unit::TestCase
       Math.hypot(x2-x1, y2-y1)
     end
 
-    test "calling with only the required arguments" do
-      return
+    _test "calling with only the required arguments" do
       assert_equal __, distance(3,4)
     end
 
-    test "overriding some of the default arguments" do
-      return
+    _test "overriding some of the default arguments" do
       assert_equal __, distance(3,4,3)
     end
 
-    test "overriding all the default arguments" do
-      return
+    _test "overriding all the default arguments" do
       assert_equal __, distance(1,1,5,1)
     end
 
-    test "calling with less than the required arguments" do
-      return
+    _test "calling with less than the required arguments" do
       error = assert_raises(___) do
         distance(1)
       end
@@ -132,8 +117,7 @@ class MethodArgumentsTest < Test::Unit::TestCase
       assert_match /#{__}/, error.message
     end
 
-    test "calling with too many arguments" do
-      return
+    _test "calling with too many arguments" do
 
       error = assert_raises(___) do
         distance(1,2,3,4,5)
@@ -151,13 +135,11 @@ class MethodArgumentsTest < Test::Unit::TestCase
       "#{a} #{b} #{c}"
     end
 
-    test "function may be called with no arguments" do
-      return
+    _test "function may be called with no arguments" do
       assert_equal __, story
     end
 
-    test "arguments are processed from left-to-right" do
-      return
+    _test "arguments are processed from left-to-right" do
       assert_equal __, story("We","are")
     end
 
@@ -168,8 +150,7 @@ class MethodArgumentsTest < Test::Unit::TestCase
       "#{details[:noun]} #{details[:verb]}"
     end
 
-    test "if the last argument is a hash, you can omit the {}" do
-      return
+    _test "if the last argument is a hash, you can omit the {}" do
       msg = story(:noun => "Matz", :verb => "is", :adjective => "Nice")
       assert_equal __, msg
     end
@@ -178,8 +159,7 @@ class MethodArgumentsTest < Test::Unit::TestCase
       "#{details[:place] || 'LSRC'} #{details[:verb] || 'Rules!'}"
     end
 
-    test "can be used in combination with optional arguments" do
-      return
+    _test "can be used in combination with optional arguments" do
       # call story2() with the appropriate arguments to produce these values
       assert_equal "LSRC Rules!",   __
       assert_equal "LSRC Rocks!",   __
@@ -192,7 +172,7 @@ class MethodArgumentsTest < Test::Unit::TestCase
       # fill in.  see other distance functions for hints.
     end
 
-    test "can follow some mandatory arguments" do
+    _test "can follow some mandatory arguments" do
       assert_equal 5, distance([5,0])
       assert_equal 4, distance([0,4])
       assert_equal 5, distance([0,4], :to => [3,0]) 
@@ -206,7 +186,7 @@ class MethodArgumentsTest < Test::Unit::TestCase
       args
     end
 
-    test "Arguments can be treated as an array" do
+    _test "Arguments can be treated as an array" do
       # call slurpy() with the right arguments to get the following results
       assert_equal [], __
       assert_equal [1,2,3], __

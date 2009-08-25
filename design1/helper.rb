@@ -53,6 +53,10 @@ class Test::Unit::TestCase
   def self.test(name, &block)
     define_method(test_name(name), &block)
   end
+
+  def self._test(name)
+    puts "TODO #{name}"
+  end
  
   class << self
     alias_method :should, :test
